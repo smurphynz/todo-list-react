@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <div>
-      <h1>Sean's Cool To-Do List</h1>
+      <h1>To-Do List</h1>
       <input
         type="text"
         value={newTask}
@@ -36,11 +37,17 @@ function App() {
 
       <ul>
         {tasks.map((task, index) => (
-          <li key={index} style={{ textDecoration: task.completed ? "line-through" : "none" }}>
-            <span onClick={() => toggleTaskCompletion(index)} style={{ cursor: "pointer" }}>
-              {task.text}
-            </span>
-            <button onClick={() => deleteTask(index)}>❌</button>
+          <li key={index}>
+            <span>{task.text}</span>
+            <div>
+              <button
+                className={task.completed ? "completed" : "complete"}
+                onClick={() => toggleTaskCompletion(index)}
+              >
+                {task.completed ? "✅" : "✔️"}
+              </button>
+              <button className="delete" onClick={() => deleteTask(index)}>❌</button>
+            </div>
           </li>
         ))}
       </ul>
@@ -49,4 +56,5 @@ function App() {
 }
 
 export default App;
+
 
