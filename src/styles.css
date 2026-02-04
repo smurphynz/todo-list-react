@@ -1,80 +1,260 @@
-/* Center everything */
+:root {
+  color-scheme: dark;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin: 0;
+  background: radial-gradient(circle at top, #1b1f3b, #0a0b16 70%);
+  color: #f7f3d7;
+  min-height: 100vh;
 }
 
-/* App container */
-div {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 300px;
+#root {
+  min-height: 100vh;
 }
 
-/* Heading */
-h1 {
-  color: #333;
-}
-
-/* Input field */
-input {
-  width: 80%;
-  padding: 8px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* Buttons */
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  margin-left: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Task list */
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  background: #e9ecef;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 5px;
+.app {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 2.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   align-items: center;
+  justify-content: space-between;
 }
 
-/* Completed tasks */
-li.completed {
-  text-decoration: line-through;
-  color: gray;
+h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin: 0;
+  letter-spacing: 0.04em;
 }
 
-/* Delete button */
-button.delete {
-  background-color: red;
+.subtitle {
+  margin: 0.35rem 0 0;
+  color: #f2d76b;
+  font-size: 1rem;
 }
 
-button.delete:hover {
-  background-color: darkred;
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(90px, 1fr));
+  gap: 0.75rem;
+  background: rgba(8, 10, 20, 0.7);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.scoreboard .label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8aa0ff;
+}
+
+.scoreboard .value {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.game-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(15, minmax(18px, 1fr));
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 15 / 11;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #05060f;
+  box-shadow: inset 0 0 0 2px #29348a, 0 20px 45px rgba(0, 0, 0, 0.4);
+}
+
+.cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.wall {
+  background: #1c2e72;
+  border: 1px solid #0c1435;
+}
+
+.path {
+  background: #060712;
+}
+
+.dot::after {
+  content: "";
+  width: clamp(4px, 0.6vw, 6px);
+  height: clamp(4px, 0.6vw, 6px);
+  background: #f7f3d7;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(247, 243, 215, 0.7);
+}
+
+.pacman::before {
+  content: "";
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: #f7c948;
+  box-shadow: 0 0 12px rgba(247, 201, 72, 0.6);
+  clip-path: polygon(50% 50%, 100% 25%, 100% 75%);
+}
+
+.pacman.up::before {
+  transform: rotate(-90deg);
+}
+
+.pacman.down::before {
+  transform: rotate(90deg);
+}
+
+.pacman.left::before {
+  transform: rotate(180deg);
+}
+
+.ghost::before {
+  content: "";
+  width: 80%;
+  height: 80%;
+  border-radius: 45% 45% 30% 30%;
+  background: currentColor;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.ghost::after {
+  content: "";
+  position: absolute;
+  top: 35%;
+  width: 55%;
+  height: 25%;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+.ghost.pink {
+  color: #ff6aa7;
+}
+
+.ghost.cyan {
+  color: #62e7ff;
+}
+
+.status-panel {
+  min-height: 140px;
+}
+
+.status-card {
+  background: rgba(12, 14, 29, 0.85);
+  border-radius: 16px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+}
+
+.status-card h2 {
+  margin-top: 0;
+}
+
+.status-card p {
+  margin: 0.5rem 0 1rem;
+  color: #cbd2ff;
+}
+
+button {
+  font: inherit;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  cursor: pointer;
+  background: #2d48ff;
+  color: #f7f3d7;
+  font-weight: 700;
+  box-shadow: 0 8px 16px rgba(45, 72, 255, 0.35);
+}
+
+button.primary {
+  background: #f7c948;
+  color: #1a1c2f;
+  box-shadow: 0 8px 18px rgba(247, 201, 72, 0.5);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dpad {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+}
+
+.dpad button {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: rgba(28, 37, 94, 0.8);
+  color: #f7f3d7;
+  box-shadow: inset 0 0 0 2px rgba(95, 117, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.dpad-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.dpad-row button:nth-child(2) {
+  grid-column: 2;
+}
+
+.control-hint {
+  max-width: 360px;
+  font-size: 0.95rem;
+  color: #f7f3d7;
+}
+
+@media (max-width: 720px) {
+  .app {
+    padding: 1rem 1rem 2rem;
+  }
+
+  .scoreboard {
+    width: 100%;
+  }
+
+  .game-grid {
+    max-width: 100%;
+  }
 }
