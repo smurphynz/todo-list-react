@@ -1,17 +1,31 @@
-## Running React on Replit
+## Calitrack (React + Vite)
 
-[React](https://reactjs.org/) is a popular JavaScript library for building user interfaces.
+This project is a Vite + React frontend and can be deployed to Render as a **Static Site**.
 
-[Vite](https://vitejs.dev/) is a blazing fast frontend build tool that includes features like Hot Module Reloading (HMR), optimized builds, and TypeScript support out of the box.
+## Local development
 
-Using the two in conjunction is one of the fastest ways to build a web app.
+- Install dependencies: `npm install`
+- Start dev server: `npm run dev`
+- Build production bundle: `npm run build`
+- Preview production build: `npm run preview`
 
-### Getting Started
-- Hit run
-- Edit [App.jsx](#src/App.jsx) and watch it live update!
+## Deploying to Render
 
-By default, Replit runs the `dev` script, but you can configure it by changing the `run` field in the [configuration file](#.replit). Here are the vite docs for [serving production websites](https://vitejs.dev/guide/build.html)
+This repository includes a `render.yaml` Blueprint config for Render.
 
-### Typescript
+### Option A: Blueprint deploy (recommended)
 
-Just rename any file from `.jsx` to `.tsx`. You can also try our [TypeScript Template](https://replit.com/@replit/React-TypeScript)
+1. Push this repo to GitHub.
+2. In Render, choose **New +** → **Blueprint**.
+3. Select your repo.
+4. Render will read `render.yaml` and create a static site.
+
+### Option B: Manual static site setup
+
+If you prefer creating the service manually:
+
+- **Environment**: Node
+- **Build Command**: `npm ci && npm run build`
+- **Publish Directory**: `dist`
+
+Render will host the built static assets from `dist`.
